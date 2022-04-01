@@ -1,10 +1,14 @@
-const puppeteer = require("puppeteer");
+const puppeteer = require('puppeteer-extra')
 const fetch = require("node-fetch");
 const dotenv = require("dotenv")
 
 dotenv.config()
 
+const StealthPlugin = require('puppeteer-extra-plugin-stealth')
+puppeteer.use(StealthPlugin())
+
 let temp = ""
+let ftxtemp = ""
 const crawlerFn = async () => {
     //创建一个Browser（浏览器）实例
     const browser = await puppeteer.launch({
@@ -36,5 +40,36 @@ const crawlerFn = async () => {
     // 关闭浏览器实例
     await browser.close();
 }
-//使用async/await处理异步
-setInterval(crawlerFn, 30000)
+
+const ftxCrawlerFn = async () => {
+    const browser = await puppeteer.launch({headless: true, defaultViewport: { width: 1200, height: 900 }})
+    const page = await browser.newPage()
+    await page.goto("https://help.ftx.com/hc/zh-cn/sections/360007186612-%E4%B8%8A%E6%96%B0%E5%85%AC%E5%91%8A")
+    await page.waitForSelector(".sections-list");
+    const data = await page.evaluate(() => {
+        let data = [];
+        let elements = document.getElementsByClassName('sections-list');
+        for (let element of elements) {
+            data.push({
+                title: element.innerText,
+                url: `https://help.ftx.com${element.getAttribute('href')}`
+            });
+        }
+
+        return data;
+    });
+
+    const { title, url } = data[0]
+    if (ftxtemp !== title) {
+        ftxtemp = title
+        fetch(`https://xizhi.qqoq.net/${process.env.TOKEN}?title=${title}&content=${url}`)
+    }
+    await browser.close();
+}
+
+const main = async () => {
+    await crawlerFn()
+    await ftxCrawlerFn()
+}
+
+setInterval(main, 60000)
