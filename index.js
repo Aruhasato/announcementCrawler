@@ -13,7 +13,8 @@ const crawlerFn = async () => {
     //创建一个Browser（浏览器）实例
     const browser = await puppeteer.launch({
         //设置有头模式（默认为true，无头模式）
-        headless: true
+        headless: true,
+        args: ["--no-sandbox"]
     });
     //在浏览器中创建一个新的页面
     const page = await browser.newPage();
@@ -42,7 +43,7 @@ const crawlerFn = async () => {
 }
 
 const ftxCrawlerFn = async () => {
-    const browser = await puppeteer.launch({headless: true, defaultViewport: { width: 1200, height: 900 }})
+    const browser = await puppeteer.launch({headless: true, args: ["--no-sandbox"]})
     const page = await browser.newPage()
     await page.goto("https://help.ftx.com/hc/zh-cn/sections/360007186612-%E4%B8%8A%E6%96%B0%E5%85%AC%E5%91%8A")
     await page.waitForSelector(".sections-list");
