@@ -34,7 +34,7 @@ const getRandomUser = (userList, max) => {
 const reply = '#layers > div:nth-child(2) > div > div > div > div > div > div.css-1dbjc4n.r-1habvwh.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-1867qdf.r-1wbh5a2.r-rsyp9y.r-1pjcn9w.r-htvplk.r-1udh08x.r-1potc6q > div > div > div > div.css-1dbjc4n.r-iphfwy > div > div:nth-child(2) > div > div > div > div > div.css-1dbjc4n.r-1iusvr4.r-16y2uox.r-1777fci.r-1h8ys4a.r-1bylmt5.r-13tjlyg.r-7qyjyx.r-1ftll1t > div.css-1dbjc4n.r-184en5c > div > div > div > div > div > div > div > div > div > label > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2 > div > div > div > div > div.DraftEditor-editorContainer > div'
 const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 const prevfn = async () => {
-  browser = await puppeteer.launch({ headless: true});
+  browser = await puppeteer.launch({ headless: true, args: ["--no-sandbox"]});
 
   // page = await browser.newPage();
   page = (await browser.pages())[0] //不会新建tab页
