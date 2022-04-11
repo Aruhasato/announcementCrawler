@@ -8,7 +8,7 @@ let browser = null;
 let page = null;
 
 const userList = [
-  '@VVecchionacce ','@jennyhincapie5 ', '@HolgharS ', '@Camilosg300 ', '@pabloyarce7 ', '@pabloyarce7 ', '@AndariasNFT ', '@Valenmprado ', '@JhonatanForeroo ',
+  '@VVecchionacce ','@jennyhincapie5 ', '@HolgharS ', '@Camilosg300 ', '@pabloyarce7 ', '@AndariasNFT ', '@Valenmprado ', '@JhonatanForeroo ',
   '@felipeignacio6e ', '@frankdr1993 ', '@JulianEscobar ', '@Jork4 ', '@IslandDollDR ', '@_yamamah_ ', '@abdullaalakbary ', '@Hamtar093 ', '@krist3n7 ',
   '@JessaMaeEduart1 ', '@kaoiNFT ', '@ZxZoe ', '@cryptoNFTstuffs ', '@MzaithChamp ', '@ZiynettAkar ', '@fahirsenerr ', '@BumShakalakaRS ', '@eylulkizilkaya9 ',
   '@Kaunght202246 ', '@jbsgsmile ', '@NeslihanKiz ', '@sairyazarlar ', '@PhantomVN3 ', '@KerimeUcarr ', '@sahudin_k ', '@0penseaa ', '@CapyBaraswrld ',
@@ -16,18 +16,12 @@ const userList = [
   '@MelonWor1d ', '@Melou21E2 ', '@melpinnn ', '@melt_welly ', '@MeltomSharday ', '@MeltyzOff ', '@melva_sandoval ', '@Melvin10662718 ', '@melvincapital__ ', '@MelvinGsy ',
   '@melvinnones ', '@melwritesmiami ', '@mem01010101 ']
 
-const getRandomUser = (userList, max) => {
+const getRandomUser = (arr, max) => {
   const result = [];
-  let count = userList.length;
   for (var i = 0; i < max; i++) {
-      var index = ~~(Math.random() * count) + i;
-      if(result.includes(userList[index])){
-          continue;
-      }
-      result[i] = userList[index];
-      userList[index] = userList[i];
-      count--;
-  }
+    var ran = Math.floor(Math.random() * (arr.length - i));
+    result.push(arr[ran]);
+  };
   return result
 }
 
@@ -93,6 +87,7 @@ const prevfn = async () => {
 
 }
 const main = async () => {
+  try {
   // await page.evaluate('window.scrollTo(0, 0)');
     await page.goto('https://twitter.com/search?q=wl%20follow&src=typed_query&f=live');
     // const link = 'https://twitter.com/search?q=wl%20follow&src=typed_query&f=live'
@@ -202,6 +197,10 @@ const main = async () => {
       // await page.evaluate('window.scrollTo(0, document.body.scrollHeight)');
       // await page.waitForFunction(`document.body.scrollHeight > ${previousHeight}`);
       // await page.waitForTimeout(2000);
+  }
+  catch (e) {
+    console.log('main error', e)
+  }
   }
 
   const run = async () => {
